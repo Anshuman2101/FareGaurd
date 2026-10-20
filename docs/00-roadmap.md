@@ -26,7 +26,7 @@ For each phase:
 ## Phases
 | Phase | Goal | New skill introduced | Status |
 |---|---|---|---|
-| 0 | Repo skeleton, domain model, synthetic data generator | — | In progress |
+| 0 | Repo skeleton, domain model, synthetic data generator | — | Done |
 | 1 | Core booking API (Python/FastAPI) + C++ rules engine (credit-line limit, velocity checks) via REST/Protobuf | — (polish only) | Not started |
 | 2 | Event-driven fraud pipeline: booking events → Kafka → async fraud-signal consumer | Kafka | Not started |
 | 3 | Convert gateway ↔ rules-engine call to gRPC | gRPC | Not started |

@@ -69,24 +69,24 @@ fareguard/
   docs/
     00-roadmap.md                  Phases 0-8, decisions log, how-we-work process
     hld/
-      01-system-context.md         Actors (Sub-Agent, Agency Admin, Fraud Analyst), system
-                                    boundary, mermaid context diagram, scope notes
+      01-system-context.md         Actors, system boundary, context diagram
+      02-domain-model.md           Agency/SubAgent/CreditLine/Booking, limits, lifecycle,
+                                    closed decisions (integer minor units, sub_limit policy)
+    lld/
+      00-synthetic-data-generator.md
+  tools/datagen/
+    generate.py                    Deterministic synthetic data generator (stdlib, Py3.9+)
+    test_generate.py               unittest invariants (utilization, FK, labels, determinism)
 ```
-Nothing else has been created yet — no domain model doc, no synthetic data generator, no service
-code. We were about to define the **domain model** (Phase 0, step 2) when the git blocker came up.
+**Phase 0 is complete** (2026-10-20). Run `python3 tools/datagen/generate.py` to produce
+`data/generated/*.jsonl` (git-ignored); tests: `python3 -m unittest discover -s tools/datagen`.
 
 ## 6. Next steps (in order, once resumed)
-1. **Finish Phase 0**:
-   - Write `docs/hld/02-domain-model.md` — core entities: `Agency`, `SubAgent`, `CreditLine`,
-     `Booking` (minimal MVP set; `FraudCase` entity comes later in Phase 1/4). Discuss
-     interactively with the user before finalizing (fields, relationships, status enums).
-   - Set up git + GitHub repo (see blocker above).
-   - Build a synthetic data generator (Python) producing Agencies/SubAgents/CreditLines/Bookings
-     with a small % of intentionally anomalous patterns (near/over credit-limit, rapid-burst
-     velocity) for later fraud-detection phases to consume.
-2. **Phase 1**: Core booking API (Python/FastAPI) + C++ rules engine (credit-line limit, velocity
+1. **Phase 1**: Core booking API (Python/FastAPI) + C++ rules engine (credit-line limit, velocity
    checks), talking over REST/Protobuf. Polish-only phase (no new skill), but first real code.
-3. **Phase 2 onward**: follow `docs/00-roadmap.md` phase table (Kafka → gRPC → Agentic AI →
+   Start with the Phase 1 HLD (interactive), then LLD (including `FraudCase` entity and whether
+   a "settled" booking state is needed), then build.
+2. **Phase 2 onward**: follow `docs/00-roadmap.md` phase table (Kafka → gRPC → Agentic AI →
    Observability → Kubernetes → CI/CD hardening → optional UI/polish).
 
 ## 7. How to resume this conversation elsewhere

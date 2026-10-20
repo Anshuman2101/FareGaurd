@@ -17,8 +17,11 @@ Every new concept gets a plain-English explainer doc in `docs/learning-notes/` *
 in code, written for understanding first, implementation second.
 
 ## Status
-Planning stage — see [docs/00-roadmap.md](docs/00-roadmap.md) for the phased build plan and
-[docs/hld/](docs/hld/) for the system design being built up interactively.
+Phase 0 complete (domain model + synthetic data generator). Next: Phase 1. See
+[docs/00-roadmap.md](docs/00-roadmap.md) for the phased build plan and
+[docs/hld/](docs/hld/) for the system design built up interactively.
+
+Generate sample data: `python3 tools/datagen/generate.py` (output in `data/generated/`).
 
 ## Repo layout (will grow per phase)
 ```
@@ -29,5 +32,6 @@ docs/
   learning-notes/       "What is X and why are we using it" — one topic per file
   decisions/            ADRs — short records of why a choice was made
   glossary.md           Running glossary of terms introduced
+tools/datagen/          Synthetic data generator + tests (Phase 0)
 services/               Added as each phase is built
 ```

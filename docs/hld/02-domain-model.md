@@ -96,10 +96,21 @@ attempts are a separate concern (logged as rejected requests, not modeled as ent
   exists yet (out of scope per [01-system-context.md](01-system-context.md)).
 - No `FraudCase` entity — comes with the rules engine (Phase 1) and AI agent (Phase 4).
 
-## Open questions carried into Phase 1 LLD
-- Exact precision/type for money fields (likely fixed-point integer minor-units in the actual
-  schema, not `decimal`/`float`, to avoid rounding bugs) — to be nailed down in the Phase 1 LLD
-  when the C++ rules engine's data types are decided.
-- Whether `SubAgent.sub_limit` is admin-set per sub-agent at creation or defaults to some
-  fraction of the agency pool — a synthetic-data-generator concern, decided when that generator
-  is built later in this phase.
+## Decisions closed at the end of Phase 0
+- **Money type: integer minor units.** All money fields (`total_limit`, `utilized_amount`,
+  `sub_limit`, `amount`) are integers in the currency's minor unit (`12345` = 123.45). No floats,
+  so no rounding bugs; maps directly to C++ `int64_t` and Protobuf `int64`. The `decimal` types in
+  the ERD above are conceptual only.
+- **`sub_limit` policy: admin-set, random fraction of the agency pool.** For ~25% of agencies the
+  fractions are deliberately over-allocated (sum of sub-limits > agency total); the rest sum to
+  70-100% of the pool. See [the generator LLD](../lld/00-synthetic-data-generator.md).
+- **Synthetic placeholder fields on `Booking`** (added by the generator, not core schema):
+  `origin`, `destination`, `traveler_ref` (opaque `TRV-xxxxxxxx`, not PII).
+- **Rejected requests** are a separate record type (`rejected_requests.jsonl`) with a `reason`
+  (`SUB_LIMIT_EXCEEDED`, `AGENCY_LIMIT_EXCEEDED`, `ACCOUNT_SUSPENDED`), matching the rule above
+  that a failed check never creates a `Booking`.
+
+## Still open for Phase 1 LLD
+- No settlement/repayment step exists: `CONFIRMED` bookings hold credit until refunded or
+  cancelled. Fine for a 30-day synthetic window; revisit if the rules engine needs a "settled"
+  state.
