@@ -72,6 +72,9 @@ fareguard/
       01-system-context.md         Actors, system boundary, context diagram
       02-domain-model.md           Agency/SubAgent/CreditLine/Booking, limits, lifecycle,
                                     closed decisions (integer minor units, sub_limit policy)
+      03-system-architecture.md    End-state component diagram, sync booking flow, async
+                                    fraud/AI flow, responsibility split, per-phase build-up,
+                                    open Phase 1 design questions
     lld/
       00-synthetic-data-generator.md
   tools/datagen/
