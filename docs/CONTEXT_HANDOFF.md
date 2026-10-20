@@ -51,27 +51,16 @@ same philosophy as the user's PCI-DSS/SDL background).
 
 Full phase breakdown is in [docs/00-roadmap.md](docs/00-roadmap.md) (8 phases, 0 through 8).
 
-## 4. Current blocker — git not installed
-On this machine (`an2kumar`'s current PC), `git` is **not installed / not on PATH**:
-```
-git --version   -> "git is not recognized..."
-C:\Program Files\Git\bin\git.exe  -> does not exist
-C:\Program Files\Git\cmd\git.exe  -> does not exist
-```
-This blocks:
-- Initializing local version control for the repo
-- Creating/pushing to the GitHub repo `Anshuman2101/FareGaurd`
-- The CI/CD phase (Phase 7), which depends on a real git remote
-
-**User's plan**: resume this work on a different machine that has git (and likely GitHub CLI or
-browser access) installed, rather than installing dev tools on this machine right now.
-
-**When resuming on the new machine**, still need to:
-1. Confirm `git --version` and `gh --version` (or just use github.com in browser) work.
-2. `git init` inside `fareguard/`, create `.gitignore`, first commit.
-3. Create the GitHub repo at `https://github.com/Anshuman2101/FareGaurd.git` (via `gh repo create`
-   or manually on github.com), add as remote, push.
-4. Continue from "Next steps" below.
+## 4. Blocker resolved — git/gh now available
+Resolved on the current machine (2026-10-20): `git` (2.52.0) and `gh` (2.97.0) are installed and
+on PATH. Completed:
+1. Confirmed `git --version` and `gh --version` work.
+2. Ran `git init` inside `fareguard/`, added `.gitignore` (Python/C++/Docker/Helm/secrets), made
+   the first commit on branch `main`.
+3. Authenticated `gh` (device flow, logged in as `Anshuman2101`). The GitHub repo
+   `https://github.com/Anshuman2101/FareGaurd` already existed (empty) — added as `origin` and
+   pushed `main`.
+4. Continuing from "Next steps" below (domain model doc, then synthetic data generator).
 
 ## 5. Progress so far (files that exist today)
 ```
